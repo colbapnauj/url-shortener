@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import connectDB  from './config/db.js';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -11,6 +12,11 @@ import indexRouter from './routes/index.js';
 import urlsRouter from './routes/url.js';
 
 
+app.use(cors(
+    {
+        origin: '*',
+    }
+    ));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
