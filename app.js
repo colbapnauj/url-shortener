@@ -8,14 +8,15 @@ const app = express();
 connectDB();
 
 import indexRouter from './routes/index.js';
-import urlsRouter from './routes/urls.js';
+import urlsRouter from './routes/url.js';
 
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use('/', indexRouter);
-app.use('/api', urlsRouter);
+app.use('/api/url', urlsRouter);
+app.use('/api/customurl', urlsRouter);
 
 // Server Setup
 const PORT = process.env.PORT || 3333;
