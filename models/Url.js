@@ -10,6 +10,11 @@ const UrlSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    description: {
+        type: String,
+        required: false,
+        default: '',
+    },
     clicks: {
         type: Number,
         required: true,
@@ -19,6 +24,11 @@ const UrlSchema = new mongoose.Schema({
         type: String,
         default: Date.now,
     },
+    shorterBy: {
+        type: String,
+        required: true,
+        default: 'nanoid',
+    }   
 });
 
 export default mongoose.model('Url', UrlSchema);

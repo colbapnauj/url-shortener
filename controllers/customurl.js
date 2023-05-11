@@ -1,4 +1,4 @@
-import Url from '../models/Url.js';
+import Url from '../models/url.js';
 import { validateUrl } from '../utils/utils.js';
 
 const createCustomUrl = async (req, res) => {

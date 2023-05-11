@@ -1,10 +1,9 @@
-import { nanoid } from "nanoid";
 import Url from "../models/url.js";
 import { validateUrl } from "../utils/utils.js";
 
 const getUrls = async (req, res) => {
   try {
-    const urls = await Url.find({ shorterBy: 'nanoid'});
+    const urls = await Url.find({ shorterBy: 'customid' });
     if (urls) {
       res.send(urls);
     } else {
@@ -33,10 +32,8 @@ const getUrl = async (req, res) => {
 };
 
 const createUrl = async (req, res) => {
-  const { origUrl, description } = req.body;
-  const base = req.headers.host;
+  const { origUrl, description, customId } = req.body;
 
-  const urlId = nanoid(7);
   if (validateUrl(origUrl)) {
     try {
       let url = await Url.findOne({ origUrl });
@@ -46,9 +43,10 @@ const createUrl = async (req, res) => {
       } else {
         url = new Url({
           origUrl,
-          urlId,
+          urlId: customId,
           description,
           date: new Date(),
+          shorterBy: 'customid'
         });
 
         await url.save();
@@ -65,7 +63,7 @@ const createUrl = async (req, res) => {
 };
 
 const updateUrl = async (req, res) => {
-  const { origUrl } = req.body;
+  const { origUrl, customId, description } = req.body;
   const { id } = req.params;
 
   if (validateUrl(origUrl)) {
@@ -73,6 +71,8 @@ const updateUrl = async (req, res) => {
       let url = await Url.findOne({ _id: id });
       if (url) {
         url.origUrl = origUrl;
+        url.urlId = customId;
+        url.description = description;
         url.date = new Date(),
         await url.save();
         res.json(url);
