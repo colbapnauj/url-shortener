@@ -2,6 +2,11 @@ import express from 'express'
 import Url from '../models/Url.js'
 const router = express.Router()
 
+// redirect to shortener.eivi.link
+router.get('/', async (req, res) => {
+  res.redirect(process.env.SHORTENER_URL || '/')
+})
+
 router.get('/:urlId', async (req, res) => {
   try {
     const url = await Url.findOne({ urlId: req.params.urlId })
